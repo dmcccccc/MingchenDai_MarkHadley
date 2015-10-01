@@ -1,6 +1,8 @@
 package view;
 //Author Mingchen Dai, Mark Hadley
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -17,12 +19,16 @@ import javax.swing.table.TableModel;
 
 import com.sun.glass.events.MouseEvent;
 
+import model.JukeBox;
 import model.PlayList;
 import model.Song;
+import model.StudentManager;
 
 public class JukeboxGUI extends JFrame{
 	
+	private static JukeBox jb;
 	public static void main(String[] args) {
+		jb = new JukeBox();
 	    new JukeboxGUI().setVisible(true);
 	  }
 	
@@ -80,6 +86,7 @@ public class JukeboxGUI extends JFrame{
 	    login = new JButton("Login");
 	    login.setLocation(25, 300);
 	    login.setSize(140, 50);
+	    login.addActionListener(new LoginListener());
 	    this.add(login);
 	    
 	    // Logout Button
@@ -101,6 +108,18 @@ public class JukeboxGUI extends JFrame{
 	    this.add(currentUser);
 	  }
 
+	private class LoginListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String loginId = idIn.getText();
+			String loginPassword = passwordIn.getText();
+			if (jb.login(loginId, loginPassword))
+				currentUser.setText(loginId);
+				
+		}
+    	
+    }
 }
 
 class songList implements TableModel {
@@ -109,6 +128,7 @@ class songList implements TableModel {
 	  public static String baseDir = System.getProperty("user.dir") + System.getProperty("file.separator") + "songfiles"
 			      + System.getProperty("file.separator");
 	  
+	  // change to manager
 	  public songList() {  
 	    data.add(new Song("Space Music", 6, "Unknown", baseDir+"spacemusic.au"));
 	    data.add(new Song("Blue Ridge Mountain Mist", 38, "Ralph Schuckett", baseDir+"BlueRidgeMountainMist.mp3"));
@@ -186,4 +206,7 @@ class songList implements TableModel {
 		// TODO Auto-generated method stub
 		
 	}
+
 }
+
+    
