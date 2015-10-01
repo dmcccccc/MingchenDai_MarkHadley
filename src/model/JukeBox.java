@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
+
 // class that holds the PlayList class and ArrayList<Student> and ArrayList<Song> (which is all available songs)
 // and verifies if songs can be added to the PlayList due to certain criteria.
 public class JukeBox {

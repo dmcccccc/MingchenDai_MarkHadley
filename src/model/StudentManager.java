@@ -32,7 +32,9 @@ public class StudentManager {
 		}
 		return false;
 	}
-	
+	public void logout(){
+		
+	}
 	public boolean add(String id, String password){
 		Student s1 = new Student(id, password);
 		return this.add(s1);
