@@ -42,6 +42,10 @@ public class JukeBox {
 	public boolean login(String id, String password){
 		return studentM.login(id,password);
 	}
+	
+	public void logout(){
+		studentM.logout();
+	}
 
 	// sets all songs to zero times played by the Jukebox and all songs played
 	// by each student to zero.
