@@ -21,10 +21,10 @@ public class JukeBox {
 		playList = new PlayList();
 		lastPlay = LocalDate.now();
 		students = new ArrayList<Student>();
-		students.add(new Student("Chris", 1));
-		students.add(new Student("Devon", 22));
-		students.add(new Student("River", 333));
-		students.add(new Student("Ryan", 4444));
+		students.add(new Student("Chris", "1"));
+		students.add(new Student("Devon", "22"));
+		students.add(new Student("River", "333"));
+		students.add(new Student("Ryan", "4444"));
 		songs.add(new Song("Space Music", 6, "Unknown", baseDir+"spacemusic.au"));
 		songs.add(new Song("Blue Ridge Mountain Mist", 38, "Ralph Schuckett", baseDir+"BlueRidgeMountainMist.mp3"));
 		songs.add(new Song("Determined Tumbao", 20, "FreePlay Music",  baseDir+"DeterminedTumbao.mp3"));
