@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -93,6 +94,7 @@ public class JukeboxGUI extends JFrame{
 	    logout = new JButton("Logout");
 	    logout.setLocation(185, 300);
 	    logout.setSize(140, 50);
+	    logout.addActionListener(new LogoutListener());
 	    this.add(logout);
 	    
 	    JLabel info = new JLabel("Current User");
@@ -114,12 +116,29 @@ public class JukeboxGUI extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			String loginId = idIn.getText();
 			String loginPassword = passwordIn.getText();
-			if (jb.login(loginId, loginPassword))
+			if (jb.login(loginId, loginPassword)) {
 				currentUser.setText(loginId);
-				
+				idIn.setText("");
+				passwordIn.setText("");
+			}
+			else {
+				idIn.setText("");
+				passwordIn.setText("");
+				JOptionPane.showMessageDialog(null, "Invalid Login");
+			}
 		}
     	
     }
+	
+	private class LogoutListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			jb.logout();
+			currentUser = new JTextField("Login please");
+		}
+		
+	}
 }
 
 class songList implements TableModel {
