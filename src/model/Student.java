@@ -1,12 +1,12 @@
 package model;
 
-public class Student {
+public class Student implements Comparable {
 	private String id;
-	private int password;
+	private String password;
 	private int seconds;
 	private int songsPlayed;
 	
-	public Student(String iniId, int iniPassword) {
+	public Student(String iniId, String iniPassword) {
 		id = iniId;
 		password = iniPassword;
 		seconds = 0;
@@ -14,18 +14,18 @@ public class Student {
 	}
 
 	// Just check whether student can play, if song can be played will be checked in Song.java; both called by JukeBox or PlayList
-	public boolean canPlay(Song refSong) {
-		if (songsPlayed < 3 && seconds + refSong.getLength() <= 90000) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+//	public boolean canPlay(Song refSong) {
+//		if (songsPlayed < 3 && seconds + refSong.getLength() <= 90000) {
+//			return true;
+//		}
+//		else {
+//			return false;
+//		}
+//	}
 	//increments songsPlayed and total seconds played by the time of the song.
-	public void playASong(Song refSong) {
+	public void playASong(int length) {
 		songsPlayed++;
-		seconds += refSong.getLength();
+		seconds += length;
 	}
 	
 	//sets songs played to zero
@@ -36,7 +36,7 @@ public class Student {
 	public int getSeconds(){
 		return seconds;
 	}
-	public int getNumOfPlay() {
+	public int getNumOfPlays() {
 		return songsPlayed; 
 	}
 
@@ -44,7 +44,24 @@ public class Student {
 		return id;
 	}
 
-	public int getPassword() {
-		return password;
+//	private String getPassword() {
+//		return password;
+//	}
+	
+	@Override
+	public String toString(){
+		return id;
 	}
+
+	@Override
+	public int compareTo(Object o) {
+		return this.toString().compareTo(o.toString());
+	}
+	
+	public boolean auth(String i, String p){
+		return (i.equals(this.id) && p.equals(this.password));
+	}
+	
+
+	
 }
