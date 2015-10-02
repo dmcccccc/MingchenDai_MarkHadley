@@ -1,6 +1,12 @@
 package model;
 
-public class Student implements Comparable {
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class Student implements Comparable, Serializable {
 	private String id;
 	private String password;
 	private int seconds;
@@ -12,16 +18,21 @@ public class Student implements Comparable {
 		seconds = 0;
 		songsPlayed = 0;
 	}
-
-	// Just check whether student can play, if song can be played will be checked in Song.java; both called by JukeBox or PlayList
-//	public boolean canPlay(Song refSong) {
-//		if (songsPlayed < 3 && seconds + refSong.getLength() <= 90000) {
-//			return true;
-//		}
-//		else {
-//			return false;
-//		}
-//	}
+	private void writeObject(ObjectOutputStream out) throws IOException{
+		out.writeObject(id);
+		out.writeObject(password);
+		out.writeInt(seconds);
+		out.writeInt(songsPlayed);
+		
+	}
+	
+	 @SuppressWarnings("unchecked")
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+		 id = (String) in.readObject();
+		 password = (String) in.readObject();
+		 seconds = in.readInt();
+		 songsPlayed = in.readInt();
+	 }
 	//increments songsPlayed and total seconds played by the time of the song.
 	public void playASong(int length) {
 		songsPlayed++;
@@ -43,10 +54,6 @@ public class Student implements Comparable {
 	public String getId() {
 		return id;
 	}
-
-//	private String getPassword() {
-//		return password;
-//	}
 	
 	@Override
 	public String toString(){

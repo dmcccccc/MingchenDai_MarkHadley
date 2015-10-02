@@ -29,8 +29,19 @@ public class JukeboxGUI extends JFrame{
 	
 	private static JukeBox jb;
 	public static void main(String[] args) {
-		jb = new JukeBox();
+	
+		boolean openFromFile = true;
+
+		jb = new JukeBox(openFromFile);
 	    new JukeboxGUI().setVisible(true);
+	    
+	    //these actions need to be changed into action listeners, etc.
+	    jb.login("Chris", "1");
+	    jb.selectSong("Space Music");
+	    jb.playSong();
+	    
+	    jb.saveStateToFile("data");
+	    
 	  }
 	
 	private songList songs;
