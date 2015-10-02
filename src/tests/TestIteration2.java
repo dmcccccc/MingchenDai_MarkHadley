@@ -92,6 +92,18 @@ public class TestIteration2 {
 	@Test
 	public void TestWriteandReadState(){
 		JukeBox jb = new JukeBox(false);
+		jb.login("Chris", "1");
+		assertTrue(jb.selectSong("Space Music"));
+		assertEquals("Space Music", jb.getSelectedSongName());
+		assertEquals(0,jb.getSelectedSongTimesPlayed());
+		assertTrue(jb.playSong());
+		assertEquals(1,jb.getSelectedSongTimesPlayed());
+		assertTrue(jb.playSong());
+		assertEquals(2,jb.getSelectedSongTimesPlayed());
+		assertTrue(jb.playSong());
+		assertEquals(3,jb.getSelectedSongTimesPlayed());
+		System.out.println(baseDir +"::"+ jb.getSelectedSong().getPath());
+		assertTrue(!jb.playSong());
 		
 		
 	}

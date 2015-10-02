@@ -29,7 +29,7 @@ public class SongManager {
 		allSongs.add(new Song("Flute", 5, "Sun Microsystems", baseDir + "flute.aif"));
 	}
 
-	public SongManager(ArrayList<Song> al) throws IOException {
+	public SongManager(ArrayList<Song> al) {
 		maxPlayPerDay = MAX_SONGS_PER_DAY;
 		currentSong = null;
 		allSongs = al;
@@ -39,6 +39,7 @@ public class SongManager {
 		allSongs.add(s1);
 	}
 
+	
 	public boolean selectSong(String name) {
 		for (Song s1 : allSongs) {
 			if (name.equals(s1.getName())) {
@@ -164,5 +165,10 @@ public class SongManager {
 
 		}
 
+	}
+
+
+	public int getSelectedSongTimesPlayed() {
+		return currentSong.getTimesPlayed();
 	}
 }

@@ -25,6 +25,7 @@ public class PlayList {
 	// adds a song to be played.
 	public void addSong(Song s) {
 		songList.add(s);
+		
 	}
 
 	// plays next song and increments the index
@@ -40,6 +41,7 @@ public class PlayList {
 	private class OurEndOfSongListener implements EndOfSongListener {
 		@Override
 		public void songFinishedPlaying(EndOfSongEvent eventWithFileNameAndDateFinished) {
+			System.out.println("Inside playList class, plaing a song");
 			playNextSong();
 		}
 	}

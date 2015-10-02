@@ -4,7 +4,9 @@ package model;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -51,9 +53,40 @@ public class JukeBox {
 	}
 
 	public void saveStateToFile(String filename) {
+		try{ 
+			FileOutputStream bytesToDisk = new FileOutputStream(filename);
+			ObjectOutputStream outFile= new ObjectOutputStream(bytesToDisk);
+			outFile.writeObject(studentM);
+			outFile.close();
+			bytesToDisk.close();
+		} catch (Exception e){
+			System.out.println(e);
+		}
+	}
+	
+	public boolean playSong(){
+		int lengthOfSong = songM.getSelectedSongLength();
 
+		if (!studentM.currentStudentHasAPlay()){
+			System.out.print("Student has no plays left today");
+			return false;
+		} else if (!studentM.currentStudentHasEnoughTime(lengthOfSong)){
+			System.out.print("Student doesnt have enough time left to play song");
+			return false;
+		} else if (!songM.selectedSongCanPlay()){
+			System.out.println("Selected song cannot be played again today");
+			return false;
+		}
+		playList.addSong(songM.getSelectedSong());
+		songM.playSelectedSong();
+		studentM.playedSong(lengthOfSong);
+		playList.playNextSong();
+		return true;		
 	}
 
+	public boolean selectSong(String name){
+		return songM.selectSong(name);
+	}
 	public String currentStudent() {
 		return studentM.getCurrent();
 	}
@@ -61,7 +94,18 @@ public class JukeBox {
 	public boolean login(String id, String password) {
 		return studentM.login(id, password);
 	}
+	
+	public String getSelectedSongName(){
+		return songM.getSelectedSongName();
+	}
 
+	public int getSelectedSongTimesPlayed(){
+		return songM.getSelectedSongTimesPlayed();
+	}
+	
+	public Song getSelectedSong(){
+		return songM.getSelectedSong();
+	}
 	public void logout() {
 		studentM.logout();
 	}
