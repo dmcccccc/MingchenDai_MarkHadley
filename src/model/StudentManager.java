@@ -1,14 +1,19 @@
 package model;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.ObjectStreamException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class StudentManager {
+public class StudentManager implements Serializable {
 	private ArrayList<Student> allStudents;
 	private Student currentStudent;
 	private int maxPlayTime;
 	private int maxPlaysPerDay;
 	
-	public StudentManager(ArrayList<Student> a){
+	public StudentManager(ArrayList<Student> a) {
 		this();
 		for (int i = 0; i < a.size(); i++){
 			allStudents.add(a.get(i));
@@ -20,7 +25,32 @@ public class StudentManager {
 		maxPlaysPerDay = 3;
 		currentStudent = null;
 		allStudents = new ArrayList<Student>();
+		allStudents.add(new Student("Chris","1"));
+		allStudents.add(new Student("Devon", "22"));
+		allStudents.add(new Student("River", "333"));
+		allStudents.add(new Student("Ryan", "4444"));
 	}
+	
+	
+	private void writeObject(ObjectOutputStream out)
+		     throws IOException{
+		out.writeObject(allStudents);
+		out.writeObject(currentStudent);
+		out.writeInt(maxPlayTime);
+		out.writeInt(maxPlaysPerDay);
+		
+	}
+	
+	 @SuppressWarnings("unchecked")
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+		 allStudents = (ArrayList<Student>) in.readObject();
+		 currentStudent = (Student) in.readObject();
+		 maxPlayTime = in.readInt();
+		 maxPlaysPerDay = in.readInt();
+	 }
+
+	
+	
 	
 	public boolean login(String id, String password){
 		currentStudent = null;

@@ -1,5 +1,6 @@
 package model;
 
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
@@ -28,7 +29,7 @@ public class SongManager {
 		allSongs.add(new Song("Flute", 5, "Sun Microsystems", baseDir + "flute.aif"));
 	}
 
-	public SongManager(ArrayList<Song> al) {
+	public SongManager(ArrayList<Song> al) throws IOException {
 		maxPlayPerDay = MAX_SONGS_PER_DAY;
 		currentSong = null;
 		allSongs = al;
