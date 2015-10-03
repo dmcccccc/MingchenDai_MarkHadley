@@ -68,7 +68,7 @@ public class JukeBox {
 			System.out.println(e);
 		}
 	}
-	
+
 	public boolean playSong(){
 		int lengthOfSong = songM.getSelectedSongLength();
 
@@ -85,7 +85,7 @@ public class JukeBox {
 		playList.addSong(songM.getSelectedSong());
 		songM.playSelectedSong();
 		studentM.playedSong(lengthOfSong);
-		playList.playNextSong();
+		//playList.playNextSong();
 		return true;		
 	}
 
@@ -132,6 +132,10 @@ public class JukeBox {
 	
 	public TableModel getSongTableModel(){
 		return songM.getTableModel();
+	}
+	
+	public TableModel getPlaylistTableModel(){
+		return playList;
 	}
 
 	// checks if midnight has occurred (therefore a reset), verifies the
