@@ -1,6 +1,7 @@
 package model;
 //Author Mingchen Dai, Mark Hadley
 
+import java.awt.GraphicsConfiguration;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
@@ -11,6 +12,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+
+import javax.swing.table.TableModel;
 
 // class that holds the PlayList class and ArrayList<Student> and ArrayList<Song> (which is all available songs)
 // and verifies if songs can be added to the PlayList due to certain criteria.
@@ -24,6 +27,7 @@ public class JukeBox {
 	private StudentManager studentM;
 	private SongManager songM;
 
+	// boolean loadFromFile: if true, load previous data.
 	public JukeBox(boolean loadFromFile) {
 		if (loadFromFile) {
 			try {
@@ -31,6 +35,7 @@ public class JukeBox {
 				ObjectInputStream inFile = new ObjectInputStream(rawBytes);
 				studentM = (StudentManager) inFile.readObject();
 				inFile.close();
+				rawBytes.close();
 
 			} catch (Exception e) {
 				System.out.println("File not found, loading fresh Jukebox");
@@ -116,6 +121,18 @@ public class JukeBox {
 		studentM.reset();
 		songM.reset();
 	}
+	
+	public int currentStudentRemainingPlays(){
+		return studentM.currentStudentRemainingPlays();
+	}
+	
+	public int currentStudentRemainingTime(){
+		return studentM.currentStudentRemainingTime();
+	}
+	
+	public TableModel getSongTableModel(){
+		return songM.getTableModel();
+	}
 
 	// checks if midnight has occurred (therefore a reset), verifies the
 	// student's password, verifies if the student can
@@ -155,6 +172,11 @@ public class JukeBox {
 		} else {
 			return false;
 		}
+	}
+
+	public GraphicsConfiguration getPlayListTableModel() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	// public Song getSong(String name){

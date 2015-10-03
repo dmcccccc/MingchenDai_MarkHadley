@@ -115,14 +115,14 @@ public class StudentManager implements Serializable {
 		if(currentStudent!=null)
 			return maxPlaysPerDay - currentStudent.getNumOfPlays();
 		else
-			return -1;
+			return 0;
 	}
 	
 	public int currentStudentRemainingTime(){
 		if (currentStudent!=null)
 			return maxPlayTime - currentStudent.getSeconds();
 		else
-			return -1;
+			return 0;
 	}
 	
 	public void reset(){
