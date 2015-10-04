@@ -24,7 +24,7 @@ public class SongManager {
 				new Song("Blue Ridge Mountain Mist", 38, "Ralph Schuckett", baseDir + "BlueRidgeMountainMist.mp3"));
 		allSongs.add(new Song("Determined Tumbao", 20, "FreePlay Music", baseDir + "DeterminedTumbao.mp3"));
 		allSongs.add(new Song("Tada", 2, "Microsoft", baseDir + "tada.wav"));
-		allSongs.add(new Song("Untameable Fire", 282, "Pierre Langer", baseDir + "UntamableFire.mp3"));
+		allSongs.add(new Song("Untameable Fire", 282, "Pierre Langer", baseDir + "UntameableFire.mp3"));
 		allSongs.add(new Song("Swing Cheese", 15, "FreePlay Music", baseDir + "UntamableFire.mp3"));
 		allSongs.add(new Song("Flute", 5, "Sun Microsystems", baseDir + "flute.aif"));
 	}
@@ -42,6 +42,8 @@ public class SongManager {
 	
 	public boolean selectSong(String name) {
 		for (Song s1 : allSongs) {
+			
+
 			if (name.equals(s1.getName())) {
 				currentSong = s1;
 				return true;

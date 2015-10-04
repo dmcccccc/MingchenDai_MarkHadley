@@ -39,7 +39,7 @@ public class JukeboxGUI extends JFrame{
 	    jb.login("Chris", "1");
 	    jb.selectSong("Space Music");
 	    jb.playSong();
-	    
+
 	    jb.saveStateToFile("data");
 	    
 	  }

@@ -1,6 +1,7 @@
 package model;
 //Author Mingchen Dai, Mark Hadley
 
+import java.awt.GraphicsConfiguration;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
@@ -12,18 +13,22 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import javax.swing.ListModel;
+import javax.swing.table.TableModel;
+
 // class that holds the PlayList class and ArrayList<Student> and ArrayList<Song> (which is all available songs)
 // and verifies if songs can be added to the PlayList due to certain criteria.
 public class JukeBox {
 
 	public static String filename = "data";
-	public PlayList playList;
+	public Playlist2 playlist;
 	static LocalDate lastPlay;
 	public static String baseDir = System.getProperty("user.dir") + System.getProperty("file.separator") + "songfiles"
 			+ System.getProperty("file.separator");
 	private StudentManager studentM;
 	private SongManager songM;
 
+	// boolean loadFromFile: if true, load previous data.
 	public JukeBox(boolean loadFromFile) {
 		if (loadFromFile) {
 			try {
@@ -31,6 +36,7 @@ public class JukeBox {
 				ObjectInputStream inFile = new ObjectInputStream(rawBytes);
 				studentM = (StudentManager) inFile.readObject();
 				inFile.close();
+				rawBytes.close();
 
 			} catch (Exception e) {
 				System.out.println("File not found, loading fresh Jukebox");
@@ -43,7 +49,7 @@ public class JukeBox {
 		}
 
 		songM = new SongManager();
-		playList = new PlayList();
+		playlist = new Playlist2();
 		lastPlay = LocalDate.now();
 
 		// set up GUI
@@ -52,6 +58,9 @@ public class JukeBox {
 
 	}
 
+	public Playlist2 getPlaylist(){
+		return playlist;
+	}
 	public void saveStateToFile(String filename) {
 		try{ 
 			FileOutputStream bytesToDisk = new FileOutputStream(filename);
@@ -63,7 +72,7 @@ public class JukeBox {
 			System.out.println(e);
 		}
 	}
-	
+
 	public boolean playSong(){
 		int lengthOfSong = songM.getSelectedSongLength();
 
@@ -77,10 +86,10 @@ public class JukeBox {
 			System.out.println("Selected song cannot be played again today");
 			return false;
 		}
-		playList.addSong(songM.getSelectedSong());
+		playlist.addSong(songM.getSelectedSong());
 		songM.playSelectedSong();
 		studentM.playedSong(lengthOfSong);
-		playList.playNextSong();
+		//playList.playNextSong();
 		return true;		
 	}
 
@@ -116,35 +125,18 @@ public class JukeBox {
 		studentM.reset();
 		songM.reset();
 	}
-
-	// checks if midnight has occurred (therefore a reset), verifies the
-	// student's password, verifies if the student can
-	// play the song, and verifies if the song can be played. If those pass, it
-	// adds it to the playlist and updates the
-	// last time a song was played (LocalDate lastPlay).
-	// public void addSong(String refId, int refPassword, Song refSong) throws
-	// Exception {
-	//
-	// // check midnight
-	// if (isMidnight()) {
-	// reset();
-	// }
-	// Student refStudent = null;
-	// for (int i = 0; i < students.size(); i++) {
-	// if (refId.equals(students.get(i).getId()) && refPassword ==
-	// students.get(i).getPassword()) {
-	// refStudent = students.get(i);
-	// }
-	// }
-	// if (refStudent != null) {
-	// if (refStudent.canPlay(refSong) && refSong.canBePlayed()) {
-	// playList.addSong(refSong); // add song
-	// refStudent.playASong(refSong); // student counter++
-	// refSong.play(); // song counter++
-	// lastPlay.now(); // record time of last play to check reset
-	// }
-	// }
-	// }
+	
+	public int currentStudentRemainingPlays(){
+		return studentM.currentStudentRemainingPlays();
+	}
+	
+	public int currentStudentRemainingTime(){
+		return studentM.currentStudentRemainingTime();
+	}
+	
+	public TableModel getSongTableModel(){
+		return songM.getTableModel();
+	}
 
 	// private method that sees if midnight has occurred since last time a song
 	// was played.
@@ -157,28 +149,13 @@ public class JukeBox {
 		}
 	}
 
-	// public Song getSong(String name){
-	// for (int i = 0; i < songs.size(); i++){
-	// if (name.equals(songs.get(i).getName()))
-	// return songs.get(i);
-	//
-	// }
-	// return null;
-	// }
-	// private class AddSongToPlayListActionListener implements ActionListener{
-	// @Override
-	// public void actionPerformed(ActionEvent arg0) {
-	// int length = songM.getSelectedSongLength();
-	//
-	// if(studentM.currentStudentHasAPlay() &&
-	// studentM.currentStudentHasEnoughTime(length) &&
-	// songM.selectedSongCanPlay()){
-	// studentM.playedSong(length);
-	// songM.playSelectedSong();
-	// playList.addSong(songM.getSelectedSong());
-	// }
-	//
-	// }
-	// }
+	public GraphicsConfiguration getPlayListTableModel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public StudentManager getStudentManager() {
+		return studentM;
+	}
 
 }
